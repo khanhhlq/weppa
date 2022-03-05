@@ -24,8 +24,8 @@ body {
 .container {
   color: white;
   background-image: url("https://media.giphy.com/media/G0Odfjd78JTpu/giphy.gif");
+  margin: 0px 10px;
   width: 400px;
-  margin: 0px auto;
   border-radius: 5px;
   font-size: 14px;
   font-family: "Open Sans", sans-serif;
@@ -72,8 +72,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 50vh;
-  padding: 80px 50px;
+  height: 45vh;
+  padding: 0px 0px;
 }
 
 .city-name {

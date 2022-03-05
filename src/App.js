@@ -58,7 +58,7 @@ const App = () => {
     <div className="container">
       <div className="main-section">
         <div className="search-bar">
-          <i className="fas fa-search search-icon"></i>
+          {/* <i className="fas fa-search search-icon"></i> */}
           <input
             value={location}
             onChange={event => setLocation(event.target.value)}
@@ -66,7 +66,7 @@ const App = () => {
             type="text"
             className="awesomplete search-city"
             id="search-input"
-            placeholder="Tìm kiếm thành phố..."
+            placeholder="Nhập tên thành phố"
             list="mylist"
           />
           <datalist id="mylist">

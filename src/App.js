@@ -1,25 +1,56 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import moment from 'moment';
+import CityName from './CityName';
 
 const API = {
   key: 'e71f1a65664880465abfa686a3e0dccc',
   base: 'https://api.openweathermap.org/data/2.5/'
 }
 
-function App() {
+const App = () => {
+
+  const xoaDau = (str) => {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    return str;
+  }
 
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
 
-  const url = `${API.base}weather?q=${location}&appid=${API.key}&lang=vi&units=metric`;
+  const url = `${API.base}weather?q=${xoaDau(location.toLowerCase())}&appid=${API.key}&lang=vi&units=metric`;
 
   const searchLocation = (event) => {
     if (event.key === "Enter") {
+      checkData(location);
       axios.get(url).then((response) => {
         setData(response.data)
-        console.log(response.data)
       })
+    }
+  }
+
+  const checkData = (location) => {
+    let count = 0;
+    CityName.map(data => {
+      if (data.city.toLowerCase() === location || data.city.toLowerCase() === location.toLowerCase() || xoaDau(data.city.toLowerCase()) === location) {
+        count++;
+      }
+    })
+    if (count === 0) {
+      alert("Khu vực này chưa xác định! hoặc bạn gõ thiếu dấu")
     }
   }
 
@@ -33,10 +64,14 @@ function App() {
             onChange={event => setLocation(event.target.value)}
             onKeyPress={searchLocation}
             type="text"
-            name="search-city"
+            className="awesomplete search-city"
             id="search-input"
             placeholder="Tìm kiếm thành phố..."
+            list="mylist"
           />
+          <datalist id="mylist">
+            {CityName.map(data => (<option>{data.city.toLowerCase()}</option>))}
+          </datalist>
         </div>
         <div className="info-wrapper">
           <p className="city-name">{data.name}</p>

@@ -10,7 +10,8 @@ const API = {
 
 const App = () => {
 
-  const xoaDau = (str) => {
+  // 
+  const xoaDau = str => {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
     str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
@@ -58,7 +59,6 @@ const App = () => {
     <div className="container">
       <div className="main-section">
         <div className="search-bar">
-          {/* <i className="fas fa-search search-icon"></i> */}
           <input
             value={location}
             onChange={event => setLocation(event.target.value)}
@@ -70,7 +70,7 @@ const App = () => {
             list="mylist"
           />
           <datalist id="mylist">
-            {CityName.map(data => (<option>{data.city.toLowerCase()}</option>))}
+            {CityName.map(data => <option>{data.city.toLowerCase()}</option>)}
           </datalist>
         </div>
         <div className="info-wrapper">

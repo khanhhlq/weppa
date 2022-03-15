@@ -31,7 +31,6 @@ const App = () => {
 
   const [data, setData] = useState({});
   const [location, setLocation] = useState('');
-
   const url = `${API.base}weather?q=${xoaDau(location.toLowerCase())}&appid=${API.key}&lang=vi&units=metric`;
 
   const searchLocation = (event) => {
